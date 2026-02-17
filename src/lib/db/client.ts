@@ -17,7 +17,7 @@ export default pool;
 export async function query<T extends QueryResultRow = any>(
   text: string,
   params?: any[]
-): Promise<{ rows: T[]; rowCount: number }> {
+): Promise<{ rows: T[]; rowCount: number | null }> {
   const start = Date.now();
   const res = await pool.query<T>(text, params);
   const duration = Date.now() - start;
@@ -26,7 +26,10 @@ export async function query<T extends QueryResultRow = any>(
     console.log('Executed query', { text, duration, rows: res.rowCount });
   }
 
-  return res;
+  return {
+    rows: res.rows,
+    rowCount: res.rowCount,
+  };
 }
 
 export async function getClient(): Promise<PoolClient> {
