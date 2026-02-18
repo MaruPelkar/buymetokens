@@ -1,0 +1,69 @@
+name: buymetokens
+
+services:
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: buymetokens
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # SQL init scripts run once (alphabetical order) on first boot when data dir is empty.
+      # 01_ runs before 02_ — schema must be created before the migration is applied.
+      - ./src/lib/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./src/lib/db/migrations/001_core_loop.sql:/docker-entrypoint-initdb.d/02_migration.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d buymetokens"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ── Next.js dev server ───────────────────────────────────────────────────────
+  app:
+    image: node:20-alpine
+    working_dir: /app
+    # entrypoint-dev.sh: runs npm ci on first boot, then exec npm run dev
+    entrypoint: ["/bin/sh", "/app/docker/entrypoint-dev.sh"]
+    command: []
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # DB — uses service name "db" as host (Docker internal DNS)
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/buymetokens
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: "1"
+      # App URL — defaults to localhost:3000 for local dev
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      # External services — must be set in your .env.docker file
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+      SESSION_SECRET: ${SESSION_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      GITHUB_CALLBACK_URL: ${GITHUB_CALLBACK_URL:-http://localhost:3000/api/auth/github/callback}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PLATFORM_FEE_PERCENT: ${STRIPE_PLATFORM_FEE_PERCENT:-5}
+      OPENROUTER_MANAGEMENT_KEY: ${OPENROUTER_MANAGEMENT_KEY}
+      CRON_SECRET: ${CRON_SECRET}
+    volumes:
+      # Bind mount: source changes trigger Next.js hot reload
+      - .:/app
+      # Anonymous volume: Linux node_modules shadow the host's macOS node_modules.
+      # Without this, npm packages with native binaries would fail in the container.
+      - /app/node_modules
+      # Named volume: persist .next build cache between container restarts
+      - nextjs_cache:/app/.next
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  db_data:      # PostgreSQL data — survives docker compose down (use down -v to reset)
+  nextjs_cache: # Next.js build cache — speeds up subsequent dev server starts

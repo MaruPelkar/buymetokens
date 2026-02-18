@@ -1,0 +1,42 @@
+# Version control
+.git
+.gitignore
+
+# Build artifacts (rebuilt inside container)
+.next
+out
+build
+coverage
+
+# Dependencies (rebuilt inside container with Linux binaries)
+node_modules
+
+# Secrets — never bake into an image layer
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# Editor configs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# TypeScript incremental build info (large, regenerated)
+*.tsbuildinfo
+
+# Docker files themselves (don't invalidate cache unnecessarily)
+Dockerfile
+docker-compose.yml
+docker/
+
+# Deployment
+.vercel
+
+# Project docs
+CLAUDE.md
+docs/
