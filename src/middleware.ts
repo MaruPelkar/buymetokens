@@ -2,36 +2,34 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getIronSession } from 'iron-session';
 import { SessionData } from '@/types';
-
-const sessionOptions = {
-  password: process.env.SESSION_SECRET as string,
-  cookieName: 'buymetokens_session',
-};
+import { sessionOptions } from '@/lib/auth/session';
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  // Get session
-  const session = await getIronSession<SessionData>(
-    request,
-    response,
-    sessionOptions
-  );
+  const session = await getIronSession<SessionData>(request, response, sessionOptions);
 
-  // Protect dashboard routes
-  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith('/dashboard')) {
     if (!session.isLoggedIn || !session.userId) {
-      // Redirect to home with redirect parameter
       const url = new URL('/', request.url);
-      url.searchParams.set('redirect', request.nextUrl.pathname);
+      url.searchParams.set('redirect', pathname);
       url.searchParams.set('error', 'auth_required');
       return NextResponse.redirect(url);
     }
+  }
+
+  if (pathname.startsWith('/admin')) {
+    if (!session.isLoggedIn || !session.userId) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+    // Role check happens inside admin API routes (session doesn't carry role)
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/admin/:path*'],
 };

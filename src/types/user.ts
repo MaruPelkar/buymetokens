@@ -11,8 +11,8 @@ export interface User {
   last_login: Date | null;
   is_active: boolean;
   email_verified: boolean;
+  role: string;
   stripe_customer_id: string | null;
-  stripe_account_id: string | null;
   onboarding_completed: boolean;
 }
 
@@ -35,6 +35,8 @@ export interface Profile {
   view_count: number;
   github_sync_enabled: boolean;
   last_github_sync: Date | null;
+  total_supporters: number;
+  total_received_usd: number;
   created_at: Date;
   updated_at: Date;
 }

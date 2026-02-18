@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     // Redirect to dashboard or onboarding
     const redirectTo = user.onboarding_completed
       ? '/dashboard'
-      : '/dashboard/profile'; // Redirect to profile editor for first-time users
+      : '/dashboard/onboarding';
 
     return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}${redirectTo}`);
   } catch (error) {

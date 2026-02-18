@@ -1,5 +1,4 @@
 import { GithubButton } from '@/components/auth/GithubButton';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function Home() {
@@ -13,127 +12,133 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 py-20 text-center">
+      {/* Hero */}
+      <section className="max-w-4xl mx-auto px-4 py-24 text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          Showcase Your Work.
+          Support developers.
           <br />
-          <span className="text-yellow-500">Get Supported.</span>
+          <span className="text-yellow-500">Fund their AI.</span>
         </h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-          Create a beautiful profile page connected to your GitHub. Let supporters
-          help fund your developer journey with AI credits.
+        <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+          Donors pay in USD. Developers get OpenRouter credits they can use
+          immediately — no account switching, no copy-paste keys, just more
+          tokens to build with.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <GithubButton />
-          <Link href="/marupelkar">
-            <Button variant="outline" size="lg">
-              View Example Profile
-            </Button>
+          <Link
+            href="#how-it-works"
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium border-2 border-gray-900 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            How it works
           </Link>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            How It Works
+      {/* How it works */}
+      <section id="how-it-works" className="bg-gray-50 py-20">
+        <div className="max-w-5xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-14">
+            Three steps. That&apos;s it.
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             <div className="text-center">
-              <div className="bg-yellow-400 w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+              <div className="bg-yellow-400 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Connect GitHub
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Donor sends money
               </h3>
               <p className="text-gray-600">
-                Sign in with GitHub and sync your repositories and contributions
-                automatically.
+                They visit your profile, choose an amount, and pay with a card.
+                No account needed.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-yellow-400 w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+              <div className="bg-yellow-400 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Customize Profile
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Your balance grows
               </h3>
               <p className="text-gray-600">
-                Use AI to generate your bio or write your own. Add social links and
-                showcase your best projects.
+                We take 5% + Stripe&apos;s fee. The rest lands in your
+                OpenRouter spending limit instantly.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-yellow-400 w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+              <div className="bg-yellow-400 w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-5">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Share & Grow
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                You build with AI
               </h3>
               <p className="text-gray-600">
-                Share your profile link. Let people support your work and help you
-                access AI tools.
+                Use your provisioned OpenRouter key. Access GPT-4, Claude,
+                Gemini — whatever you need.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
+      {/* Developer value props */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Built for Developers
+            Built for developers
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="flex gap-4">
-              <div className="text-3xl">🚀</div>
+              <div className="text-2xl">🔑</div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  GitHub Integration
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  One key, every model
                 </h3>
-                <p className="text-gray-600">
-                  Automatically sync your repos, contributions, and profile data.
+                <p className="text-gray-600 text-sm">
+                  A single OpenRouter key gives you access to 200+ models.
+                  Point your base URL at OpenRouter and you&apos;re done.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <div className="text-3xl">🤖</div>
+              <div className="text-2xl">⚡</div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  AI-Powered Bios
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  Instant top-up
                 </h3>
-                <p className="text-gray-600">
-                  Generate compelling profile descriptions based on your work.
+                <p className="text-gray-600 text-sm">
+                  Donations go directly to your OpenRouter spending limit.
+                  No delays, no manual transfers.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <div className="text-3xl">🎨</div>
+              <div className="text-2xl">🛡️</div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Beautiful Profiles
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  Zero financial risk
                 </h3>
-                <p className="text-gray-600">
-                  Clean, professional pages that showcase your best projects.
+                <p className="text-gray-600 text-sm">
+                  You only spend what supporters fund. OpenRouter enforces your
+                  limit — you can&apos;t accidentally overspend.
                 </p>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <div className="text-3xl">⚡</div>
+              <div className="text-2xl">📊</div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Lightning Fast
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  Full transparency
                 </h3>
-                <p className="text-gray-600">
-                  Set up your profile in minutes. No complex configuration needed.
+                <p className="text-gray-600 text-sm">
+                  See every donation, your current balance, and usage — all
+                  from your dashboard.
                 </p>
               </div>
             </div>
@@ -141,25 +146,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA */}
       <section className="bg-yellow-400 py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Ready to Get Started?
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Set up in 2 minutes
           </h2>
-          <p className="text-xl text-gray-800 mb-8">
-            Join developers showcasing their work and building in public.
+          <p className="text-lg text-gray-800 mb-8">
+            Sign in with GitHub, choose a slug, share your link.
           </p>
           <GithubButton />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-gray-400">
-            Built with Next.js, powered by AI
-          </p>
+      <footer className="bg-gray-900 text-white py-10">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <span className="font-semibold">BuyMeTokens</span>
+          <div className="flex gap-6 text-sm text-gray-400">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

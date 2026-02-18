@@ -2,7 +2,7 @@ import { getIronSession, IronSession, SessionOptions } from 'iron-session';
 import { cookies } from 'next/headers';
 import { SessionData } from '@/types';
 
-const sessionOptions: SessionOptions = {
+export const sessionOptions: SessionOptions = {
   password: process.env.SESSION_SECRET as string,
   cookieName: 'buymetokens_session',
   cookieOptions: {
